@@ -1,0 +1,4 @@
+- Set some ECMA features to alert lint that we will use JSX from react
+- Set some environment variables - web, node, jquery
+- Set some rules
+- Define some globals to to allow them to be defined
