@@ -22,3 +22,19 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+
+
+# Commit 1:
+# Set up the environment
+# Install Dependencies: Check the package.json for the right versions of dependencies
+# - Node : Package Manager 
+# - Gulp : Task Runner
+# - Browserify : Bundler
+# - Bootstrap : Style-Sheet
+# - ES-Lint : Syntax Checker
+# - React - JS Library
+# - React-Router - Router for links
+# - Flux - State and data flow manager
+
+# An app which uses React, React-Router, Flux and Gulp
