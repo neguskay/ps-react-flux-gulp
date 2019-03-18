@@ -2,6 +2,7 @@
 
 var React = require('react');
 
+//Homepage body
 var Home = React.createClass({
 	render: function() {
 		return (

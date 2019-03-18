@@ -3,6 +3,7 @@ var React = require('react');
 var Home = require('./components/homePage');
 var About = require('./components/about/aboutPage');
 var Header = require('./components/common/header');
+var AuthorPage = require('./components/authors/authorPage');
 
 var printSomething = console.log(
 	'Hello, I am browserify annd I work: I bundle things!'
@@ -20,10 +21,16 @@ var printSomething = console.log(
 		render: function() {
 			var Child;
 
+			//Temporary switch statements for the 'fake' router
 			switch (this.props.route) {
 				case 'about':
 					Child = About;
 					break;
+
+				case 'authors':
+					Child = AuthorPage;
+					break;
+
 				default:
 					Child = Home;
 			}
