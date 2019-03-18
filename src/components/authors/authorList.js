@@ -6,6 +6,7 @@ var React = require('react');
 //Author List Comnponent
 var AuthorList = React.createClass({
 	//Declare some prop types
+	//Require an array of authors propType
 	propTypes: {
 		authors: React.PropTypes.array.isRequired
 	},
