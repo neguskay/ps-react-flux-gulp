@@ -8,10 +8,15 @@ var printSomething = console.log(
 	'Hello, I am browserify annd I work: I bundle things!'
 );
 
+//Add parameter "Router.HistoryLocation" to use HTML5 history state to change URLs
+// Router.run(routes, Router.HistoryLocation, function(Handler) {
+// 	React.render(<Handler />, document.getElementById('app'));
+// });
+
+//Without the "Router.HistoryLocation", we use # to determine URLs
 Router.run(routes, function(Handler) {
 	React.render(<Handler />, document.getElementById('app'));
 });
-
 //var Child;
 
 //Temporary switch statements for the 'fake' router

@@ -49269,7 +49269,29 @@ module.exports = {
 
 var React = require('react');
 
+//About Page
+//Has some transitons in the statics to check for some things either before the about page or leaving it
 var About = React.createClass({displayName: "About",
+	statics: {
+		//Could use to validate the authorisation and login before rendering
+		willTransitionTo: function(transition, params, query, callback) {
+			if (!confirm("You want to read a page that's this boring?")) {
+				transition.about();
+			} else {
+				callback();
+			}
+		},
+
+		//Could use to validate and check forms before leaving to another page
+		//i.e. prevent people from loosing work or forms
+		willTransitionFrom: function(transition, component) {
+			if (!confirm("You want to leave a page that's this exciting?")) {
+				transition.about();
+			}
+		}
+	},
+
+	//Render method fo the component
 	render: function() {
 		return (
 			React.createElement("div", {className: "jumbotron"}, 
@@ -49407,9 +49429,12 @@ module.exports = AuthorPage;
 'use strict';
 
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 //header component with nav links
 //Also added styling
+//Also used links instead of basic anchor tags
 var Header = React.createClass({displayName: "Header",
 	render: function() {
 		return (
@@ -49420,13 +49445,14 @@ var Header = React.createClass({displayName: "Header",
 					), 
 					React.createElement("ul", {className: "nav navbar-nav"}, 
 						React.createElement("li", null, 
-							React.createElement("a", {href: "/"}, "Home")
+							React.createElement(Link, {to: "app"}, "Home")
+							/* <a href="/">Home</a> */
 						), 
 						React.createElement("li", null, 
-							React.createElement("a", {href: "/#about"}, "About")
+							React.createElement(Link, {to: "about"}, "About")
 						), 
 						React.createElement("li", null, 
-							React.createElement("a", {href: "/#authors"}, "Authors")
+							React.createElement(Link, {to: "authors"}, "Authors")
 						)
 					)
 				)
@@ -49437,10 +49463,12 @@ var Header = React.createClass({displayName: "Header",
 
 //Module export
 module.exports = Header;
-},{"react":197}],205:[function(require,module,exports){
+},{"react":197,"react-router":28}],205:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 //Homepage body
 var Home = React.createClass({displayName: "Home",
@@ -49450,7 +49478,10 @@ var Home = React.createClass({displayName: "Home",
 				React.createElement("h1", null, "Hello world from React-Flux"), 
 				React.createElement("h6", null, "Created by Sid"), 
 				React.createElement("br", null), 
-				React.createElement("p", null, "React, React-Router and Flux: Fast and Responsive!")
+				React.createElement("p", null, "React, React-Router and Flux: Fast and Responsive!"), 
+				React.createElement(Link, {to: "about", className: "btn btn-primary btn-lg"}, 
+					"Learn more"
+				)
 			)
 		);
 	}
@@ -49458,7 +49489,30 @@ var Home = React.createClass({displayName: "Home",
 
 module.exports = Home;
 
-},{"react":197}],206:[function(require,module,exports){
+},{"react":197,"react-router":28}],206:[function(require,module,exports){
+'use strict';
+
+//Not found links, i.e. 404s should redirect to this page
+var React = require('react');
+var Link = require('react-router').Link;
+
+var NotFoundPage = React.createClass({displayName: "NotFoundPage",
+	render: function() {
+		return (
+			React.createElement("div", null, 
+				React.createElement("h1", null, "Page Not Found"), 
+				React.createElement("p", null, "Whoops! Sorry, there is nothing to see here."), 
+				React.createElement("p", null, 
+					React.createElement(Link, {to: "app"}, "Back to Home")
+				)
+			)
+		);
+	}
+});
+
+module.exports = NotFoundPage;
+
+},{"react":197,"react-router":28}],207:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -49469,10 +49523,15 @@ var printSomething = console.log(
 	'Hello, I am browserify annd I work: I bundle things!'
 );
 
+//Add parameter "Router.HistoryLocation" to use HTML5 history state to change URLs
+// Router.run(routes, Router.HistoryLocation, function(Handler) {
+// 	React.render(<Handler />, document.getElementById('app'));
+// });
+
+//Without the "Router.HistoryLocation", we use # to determine URLs
 Router.run(routes, function(Handler) {
 	React.render(React.createElement(Handler, null), document.getElementById('app'));
 });
-
 //var Child;
 
 //Temporary switch statements for the 'fake' router
@@ -49514,7 +49573,7 @@ Router.run(routes, function(Handler) {
 // 	render();
 // })(window);
 
-},{"./routes":207,"react":197,"react-router":28}],207:[function(require,module,exports){
+},{"./routes":208,"react":197,"react-router":28}],208:[function(require,module,exports){
 'use strict';
 
 //Routes declarative file [separate]
@@ -49535,7 +49594,7 @@ var routes = (
 			handler: require('./components/authors/authorPage')}
 		), 
 		React.createElement(Route, {name: "about", handler: require('./components/about/aboutPage')}), 
-		/* <NotFoundRoute handler={require('./components/notFoundPage')} /> */
+		React.createElement(NotFoundRoute, {handler: require('./components/notFoundPage')}), 
 		React.createElement(Redirect, {from: "about-us", to: "about"}), 
 		React.createElement(Redirect, {from: "awthurs", to: "authors"}), 
 		React.createElement(Redirect, {from: "about/*", to: "about"})
@@ -49545,4 +49604,4 @@ var routes = (
 //Export the routes module
 module.exports = routes;
 
-},{"./components/about/aboutPage":200,"./components/app":201,"./components/authors/authorPage":203,"./components/homePage":205,"react":197,"react-router":28}]},{},[206]);
+},{"./components/about/aboutPage":200,"./components/app":201,"./components/authors/authorPage":203,"./components/homePage":205,"./components/notFoundPage":206,"react":197,"react-router":28}]},{},[207]);
