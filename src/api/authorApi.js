@@ -3,7 +3,8 @@
 //This file is mocking a web API by hitting hard coded data.
 //Fake api
 var authors = require('./authorData').authors;
-var _ = require('lodash');
+var loadMeSomething = require('lodash');
+//var _ = require('lodash');
 
 //This would be performed on the server in a real app. Just stubbing in.
 var _generateId = function(author) {
@@ -21,7 +22,7 @@ var AuthorApi = {
 	},
 
 	getAuthorById: function(id) {
-		var author = _.find(authors, { id: id });
+		var author = loadMeSomething.find(authors, { id: id });
 		return _clone(author);
 	},
 
@@ -32,9 +33,9 @@ var AuthorApi = {
 		);
 
 		if (author.id) {
-			var existingAuthorIndex = _.indexOf(
+			var existingAuthorIndex = loadMeSomething.indexOf(
 				authors,
-				_.find(authors, { id: author.id })
+				loadMeSomething.find(authors, { id: author.id })
 			);
 			authors.splice(existingAuthorIndex, 1, author);
 		} else {
@@ -52,7 +53,7 @@ var AuthorApi = {
 		console.log(
 			'Pretend this just deleted the author from the DB via an AJAX call...'
 		);
-		_.remove(authors, { id: id });
+		loadMeSomething.remove(authors, { id: id });
 	}
 };
 

@@ -3,10 +3,14 @@
 var React = require('react');
 var Router = require('react-router');
 var routes = require('./routes');
+var InitialiseActions = require('./flux/actions/initializeActions');
 
 var printSomething = console.log(
 	'Hello, I am browserify annd I work: I bundle things!'
 );
+
+//Initialise the app with the saved author list
+InitialiseActions.initApp();
 
 //Add parameter "Router.HistoryLocation" to use HTML5 history state to change URLs
 // Router.run(routes, Router.HistoryLocation, function(Handler) {

@@ -3,7 +3,9 @@
 var React = require('react');
 var Router = require('react-router');
 var AuthorForm = require('./authorForm');
-var AuthorApi = require('../../api/authorApi');
+var AuthorActions = require('../../flux/actions/authorActions');
+var AuthorStore = require('../../flux/stores/authorStore');
+//var AuthorApi = require('../../api/authorApi');
 
 //Used for notifications
 var toastr = require('toastr');
@@ -43,7 +45,7 @@ var ManageAuthorPage = React.createClass({
 
 		//If you don't get the "id" don't update the state
 		if (authorId) {
-			this.setState({ author: AuthorApi.getAuthorById(authorId) });
+			this.setState({ author: AuthorStore.getAuthorById(authorId) });
 		}
 	},
 
@@ -92,8 +94,16 @@ var ManageAuthorPage = React.createClass({
 			return;
 		}
 
-		//Call API and save the aithor
-		AuthorApi.saveAuthor(this.state.author);
+		//A fork to check and update/create/save the new author
+		if (this.state.author.id) {
+			//check if id already exists
+			AuthorActions.updateAuthor(this.state.author);
+		} else {
+			//Call store and save the new author
+			//AuthorApi.saveAuthor(this.state.author);
+			AuthorActions.createAuthor(this.state.author);
+		}
+
 		//We have saved the inputs so we can reset the dirty flag
 		this.setState({ dirty: false });
 

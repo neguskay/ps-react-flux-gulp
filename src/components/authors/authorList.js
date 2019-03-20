@@ -3,6 +3,11 @@
 var React = require('react');
 var Router = require('react-router');
 
+//Used for notifications
+var toastr = require('toastr');
+
+var AuthorActions = require('../../flux/actions/authorActions');
+
 var Link = Router.Link;
 
 //New author list class
@@ -12,6 +17,17 @@ var AuthorList = React.createClass({
 	//Require an array of authors propType
 	propTypes: {
 		authors: React.PropTypes.array.isRequired
+	},
+
+	deleteAuthor: function(id, event) {
+		// prevent the defaults
+		event.preventDefault();
+
+		// Call the action to dispatch the delete function
+		AuthorActions.deleteAuthor(id);
+
+		//give a 'toastr' alert for successful deletion
+		toastr.success('Author Successfully Deleted');
 	},
 
 	//Render function
@@ -28,6 +44,11 @@ var AuthorList = React.createClass({
 					</td>
 					<td>
 						{author.firstName} {author.lastName}
+					</td>
+					<td>
+						<a href="#" onClick={this.deleteAuthor.bind(this, author.id)}>
+							Delete
+						</a>
 					</td>
 				</tr>
 			);
